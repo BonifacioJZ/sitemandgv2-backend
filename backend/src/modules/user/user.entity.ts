@@ -1,4 +1,6 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToMany, JoinTable } from "typeorm";
+import { Lista } from './../lista/lista.entity';
+import { Cita } from './../cita/cita.entity';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { UserDetail } from './user_details.entity';
 import { Role } from '../roles/role.entity';
     
@@ -24,6 +26,12 @@ export class User extends BaseEntity{
     @JoinTable({name:'user_role'})
     roles : Role[]
 
+    @OneToMany(type=> Cita,cita=>cita.user)
+    citas:Cita[]
+
+    @OneToMany(type=>Lista,lista=>lista.user)
+    listas:Lista[]
+    
     @Column({type:'varchar',default:'ACTIVE',length:8})
     status:string;
 
